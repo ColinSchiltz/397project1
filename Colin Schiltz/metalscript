@@ -1,0 +1,6 @@
+#!/bin/bash
+echo > reviews.fresh
+curl https://metalblade.bandcamp.com | html2text | sed -n '/community/,$p' | sed -n '/Shopping cart/q;p' | tail -n+2 > tempmetal
+sed 's/[0-9.]*//g' tempmetal > albumtemp2
+sed "s/([^)]*)//g" albumtemp2 > albumtempfixed
+while read first_line; read second_line; do echo "$first_line" "$second_line" "$(curl https://www.metal-archives.com/albums/$second_line/$first_line | html2text | sed -n '/Reviews:/,$p' | sed -n '/Songs/q;p' | tail -n+2 | less)" >> reviews.fresh; done < albumtempfixed

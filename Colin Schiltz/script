@@ -1,0 +1,6 @@
+#/bin/bash
+
+curl https://i-voidhangerrecords.bandcamp.com/ | html2text | sed -n '/COMMUNITY/,$p' | sed -n '/Shopping cart/q;p' | tail -n+2 > temp1
+sed 's/[0-9.]*//g' temp1 > albumtemp
+
+
